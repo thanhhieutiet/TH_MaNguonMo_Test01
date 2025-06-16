@@ -195,12 +195,22 @@ class SinhVienController
             redirect('controllers/SinhVienController.php?action=index');
         }
 
+        // Kiểm tra sinh viên có tồn tại không
         $sinhVien = $this->sinhVienModel->getById($id);
         if (!$sinhVien) {
             redirect('controllers/SinhVienController.php?action=index', 'Không tìm thấy sinh viên!', 'error');
         }
 
-        include __DIR__ . '/../views/sinhvien/delete.php';
+        // Xóa sinh viên
+        if ($this->sinhVienModel->delete($id)) {
+            // Xóa hình ảnh nếu có
+            if (!empty($sinhVien['Hinh']) && file_exists('.' . $sinhVien['Hinh'])) {
+                unlink('.' . $sinhVien['Hinh']);
+            }
+            redirect('controllers/SinhVienController.php?action=index', 'Xóa sinh viên thành công!', 'success');
+        } else {
+            redirect('controllers/SinhVienController.php?action=index', 'Có lỗi xảy ra khi xóa sinh viên!', 'error');
+        }
     }
 
     // Xử lý xóa sinh viên

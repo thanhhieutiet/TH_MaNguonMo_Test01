@@ -1,5 +1,5 @@
 <?php include __DIR__ . '/../layout/header.php'; ?>
-<link rel="stylesheet" href="/public/css/style.css">
+<link rel="stylesheet" href="/TTMH_Test01/public/css/style.css">
 
 <div class="container">
     <div class="page-header">
@@ -28,7 +28,8 @@
             <div class="sv-card">
                 <div class="sv-img-wrapper">
                     <?php
-                    $hinh = $sv['Hinh'] ?: 'public/uploads/sinhvien/default.png';
+                    $hinh = ltrim($sv['Hinh'], '/'); // loại bỏ dấu "/" đầu
+
                     ?>
                     <img src="/<?php echo $hinh; ?>" alt="Ảnh sinh viên <?php echo htmlspecialchars($sv['HoTen']); ?>">
                 </div>
