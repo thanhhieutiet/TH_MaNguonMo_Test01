@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/../layouts/header.php'; ?>
+<?php include __DIR__ . '/../layout/header.php'; ?>
 <div class="container">
     <h1>Thông Báo</h1>
     <div class="alert alert-success">
@@ -7,4 +7,4 @@
     <a href="controllers/DangKyController.php?action=cart">Quay Lại Giỏ Hàng</a>
     <a href="controllers/HocPhanController.php?action=index">Tiếp Tục Đăng Ký</a>
 </div>
-<?php include __DIR__ . '/../layouts/footer.php'; ?>
+<?php include __DIR__ . '/../layout/footer.php'; ?>

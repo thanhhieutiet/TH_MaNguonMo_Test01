@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/../layouts/header.php'; ?>
+<?php include __DIR__ . '/../layout/header.php'; ?>
 <div class="container">
     <h1>Đăng Nhập</h1>
     <?php

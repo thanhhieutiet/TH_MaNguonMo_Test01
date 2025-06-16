@@ -1,47 +1,81 @@
 <?php include __DIR__ . '/../layout/header.php'; ?>
-<link rel="stylesheet" href="/TTMH_Test01/public/css/index.css">
+<link rel="stylesheet" href="/public/css/style.css">
 
-
-
-<div class="sv-wrapper">
-    <h1 class="sv-title">Danh Sách Sinh Viên</h1>
+<div class="container">
+    <div class="page-header">
+        <h1 class="page-title">🎓 Quản Lý Sinh Viên</h1>
+        <p class="page-subtitle">Hệ thống quản lý thông tin sinh viên hiện đại</p>
+    </div>
 
     <?php
     $message = getMessage();
     if ($message) {
-        echo '<div class="sv-alert sv-alert-' . $message['type'] . '">' . $message['message'] . '</div>';
+        echo '<div class="alert alert-' . $message['type'] . '">';
+        echo '<i class="icon-' . $message['type'] . '"></i>';
+        echo $message['message'];
+        echo '</div>';
     }
     ?>
 
-    <div class="sv-header-action">
-        <a href="controllers/SinhVienController.php?action=create" class="sv-btn sv-btn-primary">Thêm Sinh Viên</a>
+    <div class="header-actions">
+        <a href="controllers/SinhVienController.php?action=create" class="btn btn-primary">
+            ➕ Thêm Sinh Viên Mới
+        </a>
     </div>
 
     <div class="sv-grid">
         <?php foreach ($sinhViens as $sv): ?>
             <div class="sv-card">
                 <div class="sv-img-wrapper">
-                    <img src="<?php echo $sv['Hinh'] ?: 'public/images/default.png'; ?>" alt="Ảnh sinh viên">
+                    <?php
+                    $hinh = $sv['Hinh'] ?: 'public/uploads/sinhvien/default.png';
+                    ?>
+                    <img src="/<?php echo $hinh; ?>" alt="Ảnh sinh viên <?php echo htmlspecialchars($sv['HoTen']); ?>">
+                </div>
 
-                </div>
                 <div class="sv-info">
-                    <h3><?php echo $sv['HoTen']; ?></h3>
-                    <p><strong>Mã SV:</strong> <?php echo $sv['MaSV']; ?></p>
-                    <p><strong>Giới Tính:</strong> <?php echo $sv['GioiTinh']; ?></p>
-                    <p><strong>Ngày Sinh:</strong> <?php echo formatDate($sv['NgaySinh']); ?></p>
-                    <p><strong>Ngành:</strong> <?php echo $sv['TenNganh']; ?></p>
+                    <h3><?php echo htmlspecialchars($sv['HoTen']); ?></h3>
+                    <p><strong>🆔 Mã SV:</strong> <?php echo htmlspecialchars($sv['MaSV']); ?></p>
+                    <p><strong>👤 Giới Tính:</strong> <?php echo htmlspecialchars($sv['GioiTinh']); ?></p>
+                    <p><strong>📅 Ngày Sinh:</strong> <?php echo formatDate($sv['NgaySinh']); ?></p>
+                    <p><strong>🎯 Ngành:</strong> <?php echo htmlspecialchars($sv['TenNganh']); ?></p>
                 </div>
+
                 <div class="sv-actions">
-                    <a href="controllers/SinhVienController.php?action=edit&id=<?php echo $sv['MaSV']; ?>" class="sv-action">Sửa</a>
-                    <a href="controllers/SinhVienController.php?action=delete&id=<?php echo $sv['MaSV']; ?>" class="sv-action sv-delete" onclick="return confirm('Bạn có chắc muốn xóa?');">Xóa</a>
-                    <a href="controllers/SinhVienController.php?action=detail&id=<?php echo $sv['MaSV']; ?>" class="sv-action">Chi Tiết</a>
+                    <a href="controllers/SinhVienController.php?action=edit&id=<?php echo urlencode($sv['MaSV']); ?>"
+                        class="sv-action" title="Chỉnh sửa thông tin">
+                        ✏️ Sửa
+                    </a>
+                    <a href="controllers/SinhVienController.php?action=delete&id=<?php echo urlencode($sv['MaSV']); ?>"
+                        class="sv-action sv-delete"
+                        onclick="return confirm('⚠️ Bạn có chắc chắn muốn xóa sinh viên này?\n\nHành động này không thể hoàn tác!');"
+                        title="Xóa sinh viên">
+                        🗑️ Xóa
+                    </a>
+                    <a href="controllers/SinhVienController.php?action=detail&id=<?php echo urlencode($sv['MaSV']); ?>"
+                        class="sv-action" title="Xem chi tiết">
+                        👁️ Chi Tiết
+                    </a>
                 </div>
             </div>
         <?php endforeach; ?>
     </div>
 
-    <div class="sv-pagination">
-        <?php echo $pagination; ?>
-    </div>
+    <?php if (empty($sinhViens)): ?>
+        <div class="card" style="text-align: center; padding: 60px;">
+            <h3 style="color: #666; margin-bottom: 15px;">📚 Chưa có sinh viên nào</h3>
+            <p style="color: #999; margin-bottom: 25px;">Hãy thêm sinh viên đầu tiên vào hệ thống</p>
+            <a href="controllers/SinhVienController.php?action=create" class="btn btn-primary">
+                ➕ Thêm Sinh Viên Đầu Tiên
+            </a>
+        </div>
+    <?php endif; ?>
+
+    <?php if (!empty($pagination)): ?>
+        <div class="pagination">
+            <?php echo $pagination; ?>
+        </div>
+    <?php endif; ?>
 </div>
+
 <?php include __DIR__ . '/../layout/footer.php'; ?>

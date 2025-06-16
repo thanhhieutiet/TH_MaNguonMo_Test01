@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/../layouts/header.php'; ?>
+<?php include __DIR__ . '/../layout/header.php'; ?>
 <div class="container">
     <h1>Sửa Thông Tin Sinh Viên</h1>
     <?php
@@ -54,5 +54,5 @@
     </form>
     <a href="controllers/SinhVienController.php?action=index">Quay Lại</a>
 </div>
-<?php include __DIR__ . '/../layouts/footer.php';
+<?php include __DIR__ . '/../layout/footer.php';
 unset($_SESSION['old_input']); ?>

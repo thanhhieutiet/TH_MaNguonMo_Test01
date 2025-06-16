@@ -7,36 +7,24 @@ function formatDate($date, $format = 'd/m/Y')
 }
 
 // Upload file ảnh
-function uploadImage($file, $uploadDir = 'Content/images/')
+function uploadImage($file)
 {
-    if (!isset($file) || $file['error'] !== UPLOAD_ERR_OK) {
-        return false;
+    $targetDir = 'public/uploads/sinhvien/';
+    if (!is_dir($targetDir)) {
+        mkdir($targetDir, 0777, true); // tạo thư mục nếu chưa có
     }
 
-    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg'];
-    if (!in_array($file['type'], $allowedTypes)) {
-        return false;
-    }
+    $fileName = uniqid() . '_' . basename($file['name']);
+    $targetPath = $targetDir . $fileName;
 
-    $maxSize = 2 * 1024 * 1024; // 2MB
-    if ($file['size'] > $maxSize) {
-        return false;
-    }
-
-    $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-    $fileName = uniqid() . '.' . $extension;
-    $uploadPath = $uploadDir . $fileName;
-
-    if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0777, true);
-    }
-
-    if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
-        return '/' . $uploadPath;
+    if (move_uploaded_file($file['tmp_name'], $targetPath)) {
+        // Trả về đường dẫn để lưu vào DB
+        return $targetPath; // VD: public/uploads/sinhvien/abc.jpg
     }
 
     return false;
 }
+
 
 // Validate dữ liệu
 function validateRequired($value, $fieldName)

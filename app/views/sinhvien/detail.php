@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/../layouts/header.php'; ?>
+<?php include __DIR__ . '/../layout/header.php'; ?>
 <div class="container">
     <h1>Chi Tiết Sinh Viên</h1>
     <table border="1">
@@ -29,4 +29,4 @@
     </table>
     <a href="controllers/SinhVienController.php?action=index">Quay Lại</a>
 </div>
-<?php include __DIR__ . '/../layouts/footer.php'; ?>
+<?php include __DIR__ . '/../layout/footer.php'; ?>

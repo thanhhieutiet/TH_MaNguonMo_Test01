@@ -141,20 +141,4 @@ class SinhVien
         $result = $stmt->fetch();
         return $result['count'] > 0;
     }
-
-    function uploadImage($file)
-    {
-        $targetDir = 'public/uploads/sinhvien/';
-        if (!is_dir($targetDir)) {
-            mkdir($targetDir, 0777, true); // tạo thư mục nếu chưa có
-        }
-
-        $fileName = uniqid() . '_' . basename($file['name']);
-        $targetPath = $targetDir . $fileName;
-
-        if (move_uploaded_file($file['tmp_name'], $targetPath)) {
-            return $targetPath; // ✅ trả về đường dẫn đầy đủ
-        }
-        return false;
-    }
 }
